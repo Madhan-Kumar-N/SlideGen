@@ -126,26 +126,6 @@ def remove_existing_text_boxes(slide):
         if shape.has_text_frame:
             slide.shapes._spTree.remove(shape._element)
 
-def perform_sentiment_analysis(text_data, labels):
-    # 1. Data Preparation
-    # Assuming text_data is a list of text samples and labels is a list of corresponding sentiment labels
-
-    # 2. Feature Extraction
-    vectorizer = TfidfVectorizer(max_features=1000)  # Extract top 1000 features
-    X = vectorizer.fit_transform(text_data)  # Convert text data into numerical feature vectors
-
-    # 3. Model Training
-    X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)  # Split data into train and test sets
-    svm_model = SVC(kernel='linear')  # Initialize SVM model
-    svm_model.fit(X_train, y_train)  # Train SVM model
-
-    # 4. Prediction
-    y_pred = svm_model.predict(X_test)  # Predict labels for test data
-
-    # Evaluate model performance
-    accuracy = accuracy_score(y_test, y_pred)
-    print("Accuracy:", accuracy)
-
 # Prompt user to add a PowerPoint template
 print("Please select a PowerPoint template (only .pptx files)")
 root = Tk()
@@ -195,11 +175,6 @@ for i in range(num_slides):
 
 # Add thank you slide
 add_thank_you_slide(prs)
-
-# Perform sentiment analysis (example)
-text_data = ["This movie is great!", "I didn't like the food.", "The product quality is excellent."]
-labels = ["Positive", "Negative", "Positive"]
-perform_sentiment_analysis(text_data, labels)
 
 # Prompt user to enter the name for the PowerPoint file
 output_name = input("Enter the name for the PowerPoint file to be created (without extension): ")
